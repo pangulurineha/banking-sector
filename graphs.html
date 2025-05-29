@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banking Safety Survey Results</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #0f172a;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #1a237e; /* Deep indigo */
+      margin-bottom: 40px;
+      font-weight: 700;
+      font-size: 2.5em;
+    }
+    h2 {
+      color: #3949ab; /* Indigo */
+      margin-top: 30px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 10px;
+      font-weight: 500;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      overflow: hidden; /* Ensures border-radius applies to children */
+      margin-top: 20px; /* Differentiate tables more */
+      border: 1px solid #616161; /* Darker border to the table */
+    }
+    th, td {
+      border: 1px solid #a0a0a0; /* Darker border for table cells */
+      padding: 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #f5f7fa; /* Light grey header */
+      color: #424242;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Zebra striping for rows */
+    }
+    .survey-section:nth-of-type(odd) table {
+        background-color: #fdfdfd; /* Slightly different background for odd tables */
+    }
+    .survey-section:nth-of-type(even) table {
+        background-color: #f5f5f5; /* Slightly different background for even tables */
+    }
+    tr:hover {
+      background-color: #2b2b2b;
+      color: #f5f5f5;
+    }
+    canvas {
+      max-width: 400px; /* Smaller max-width for graphs */
+      max-height: 400px; /* Max height for consistency */
+      width: 100%; /* Ensure responsiveness */
+      height: auto;
+      margin: 20px 0;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+      margin: 50px 0;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 2em;
+      }
+    }
+     .nav-buttons { display: flex; justify-content: space-between; max-width: 960px; margin: 2rem auto 0; }
+    .nav-buttons a { background: #3a3f58; color: #fff; padding: 0.6em 1.2em; border-radius: 6px; text-decoration: none; transition: background 0.3s; }
+    .nav-buttons a:hover { background: #5c6bc0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Banking Safety Survey Report</h1>
+
+    <div id="survey-sections"></div>
+  </div>
+  <div class="nav-buttons">
+    <a href="inference.html">← Previous</a>
+    <a href="vlog.html">Next →</a>
+  </div>
+
+  <script>
+    // Register the datalabels plugin globally
+    Chart.register(ChartDataLabels);
+
+    const surveyData = [
+      {
+        question: "1. How often do you use banking services?",
+        table: [
+          ["Daily", "66.2%"],
+          ["Weekly", "25.3%"],
+          ["Monthly", "5.2%"],
+          ["Rarely", "3.3%"]
+        ],
+        chartId: "chart1",
+        chartData: {
+          labels: ["Daily", "Weekly", "Monthly", "Rarely"],
+          data: [66.2, 25.3, 5.2, 3.3],
+          colors: ["#43aa8b", "#90be6d", "#f9c74f", "#f94144"]
+        }
+      },
+      {
+        question: "2. Have you ever been a victim of banking fraud?",
+        table: [
+          ["Yes", "9.0%"],
+          ["No", "91.0%"]
+        ],
+        chartId: "chart2",
+        chartData: {
+          labels: ["Yes", "No"],
+          data: [9.0, 91.0],
+          colors: ["#f3722c", "#577590"]
+        }
+      },
+      {
+        question: "3. If yes, how did you solve it?",
+        table: [
+          ["Internet Applications", "17.0%"],
+          ["Suggestions by others", "26.0%"],
+          ["Police Complaint", "48.0%"],
+          ["Other", "9.0%"]
+        ],
+        chartId: "chart3",
+        chartData: {
+          labels: ["Internet Apps", "Suggestions", "Police", "Other"],
+          data: [17.0, 26.0, 48.0, 9.0],
+          colors: ["#ef476f", "#ffd166", "#06d6a0", "#118ab2"]
+        }
+      },
+      {
+        question: "4. How do you usually respond to messages/emails asking for bank details?",
+        table: [
+          ["Verify the source", "50.0%"],
+          ["Ignore them", "36.0%"],
+          ["Shared details unknowingly", "14.0%"]
+        ],
+        chartId: "chart4",
+        chartData: {
+          labels: ["Verify Source", "Ignore", "Shared Unknowingly"],
+          data: [50.0, 36.0, 14.0],
+          colors: ["#06d6a0", "#f94144", "#f3722c"]
+        }
+      },
+      {
+        question: "5. Which banking method do you feel is the safest?",
+        table: [
+          ["Bank Branch", "47.0%"],
+          ["ATMs", "20.0%"],
+          ["Online/Mobile", "20.0%"],
+          ["Don't Trust Any", "13.0%"]
+        ],
+        chartId: "chart5",
+        chartData: {
+          labels: ["Branch", "ATMs", "Online", "None"],
+          data: [47.0, 20.0, 20.0, 13.0],
+          colors: ["#f9c74f", "#90be6d", "#43aa8b", "#577590"]
+        }
+      },
+      {
+        question: "6. Do you use mobile banking apps?",
+        table: [
+          ["Frequently", "54.0%"],
+          ["Occasionally", "35.0%"],
+          ["Do not use", "11.0%"]
+        ],
+        chartId: "chart6",
+        chartData: {
+          labels: ["Frequently", "Occasionally", "No Use"],
+          data: [54.0, 35.0, 11.0],
+          colors: ["#118ab2", "#ffd166", "#ef476f"]
+        }
+      },
+      {
+        question: "7. What is the most common reason people fall for banking scams?",
+        table: [
+          ["Lack of awareness", "39.0%"],
+          ["Carelessness", "23.0%"],
+          ["Trusting unknown calls/messages", "16.0%"],
+          ["Other", "22.0%"]
+        ],
+        chartId: "chart7",
+        chartData: {
+          labels: ["Lack of Awareness", "Carelessness", "Trusting Calls", "Other"],
+          data: [39.0, 23.0, 16.0, 22.0],
+          colors: ["#ef476f", "#06d6a0", "#118ab2", "#ffd166"]
+        }
+      }
+    ];
+
+    const container = document.getElementById('survey-sections');
+
+    surveyData.forEach((item, index) => {
+      const section = document.createElement('section');
+      section.classList.add('survey-section'); // Add a class for differentiation
+
+      section.innerHTML = `
+        <h2>${item.question}</h2>
+        <table>
+          <thead><tr><th>Option</th><th>Percentage</th></tr></thead>
+          <tbody>
+            ${item.table.map(row => `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`).join('')}
+          </tbody>
+        </table>
+        <div class="chart-container">
+          <canvas id="${item.chartId}"></canvas>
+        </div>
+        ${index < surveyData.length - 1 ? '<hr/>' : ''} `;
+      container.appendChild(section);
+
+      new Chart(document.getElementById(item.chartId), {
+        type: 'pie',
+        data: {
+          labels: item.chartData.labels,
+          datasets: [{
+            data: item.chartData.data,
+            backgroundColor: item.chartData.colors,
+            borderColor: '#ffffff', /* White border for pie segments */
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false, // Allow canvas to take desired size
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                font: {
+                  size: 14,
+                  family: 'Roboto'
+                },
+                color: '#555'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed !== null) {
+                    label += context.parsed + '%';
+                  }
+                  return label;
+                }
+              }
+            },
+            datalabels: { // Datalabels plugin configuration
+              color: '#fff',
+              formatter: (value, context) => {
+                return value + '%';
+              },
+              font: {
+                weight: 'bold',
+                size: 14
+              },
+              textShadowBlur: 5,
+              textShadowColor: 'rgba(0,0,0,0.5)'
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

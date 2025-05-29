@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banking Safety Project - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-bg: #1a1f2b;
+      --secondary-bg: #2b3040;
+      --header-bg: #0e0f1a;
+      --text-color-light: #f0f0f0;
+      --text-color-dark: #cfd8dc;
+      --accent-pink: #f06292;
+      --accent-purple: #ba68c8;
+      --accent-blue: #64b5f6;
+      --gradient-hover: linear-gradient(45deg, var(--accent-pink), var(--accent-purple), var(--accent-blue));
+    }
+
+    body {
+      background-color: var(--primary-bg);
+      color: var(--text-color-light);
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .header {
+      background-color: var(--header-bg);
+      text-align: center;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .header img {
+      height: 90px;
+      vertical-align: middle;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .header .title {
+      display: inline-block;
+      margin-left: 1.5rem;
+      vertical-align: middle;
+      text-align: left;
+    }
+
+    .header .title h1 {
+      color: white;
+      margin: 0;
+      font-size: 2.2rem;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .header .title p {
+      color: #b0b0b0;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    nav {
+      background-color: var(--secondary-bg);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; /* Allow wrapping for smaller screens */
+      padding: 1rem 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-bottom: 3px solid var(--accent-purple);
+    }
+
+    nav a {
+      color: var(--text-color-dark);
+      text-decoration: none;
+      padding: 0.8em 1.2em;
+      margin: 0.4em 0.5em;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1.05rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-hover);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    nav a:hover::before {
+      left: 0;
+    }
+
+    nav a:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      text-align: center;
+      margin: 3rem 0 1.5rem;
+      font-size: 2.5rem;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+      background: -webkit-linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .content-section {
+      background-color: var(--secondary-bg);
+      margin: 2rem auto;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 2rem;
+      color: var(--accent-blue);
+      margin-bottom: 1.5rem;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .content-section p {
+      font-size: 1.1rem;
+      color: var(--text-color-light);
+      margin: 0.8rem 0;
+      font-weight: 300;
+    }
+
+    .next-button-container {
+      text-align: center;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .next-button {
+      display: inline-block;
+      background: var(--gradient-hover);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .next-button:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .header .title h1 {
+        font-size: 1.6rem;
+      }
+      .header .title p {
+        font-size: 0.85rem;
+      }
+      nav a {
+        padding: 0.6em 1em;
+        font-size: 0.95rem;
+        margin: 0.3em;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      .content-section {
+        margin: 1.5rem auto;
+        padding: 2rem;
+      }
+      .content-section h1 {
+        font-size: 1.7rem;
+      }
+      .content-section p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header img {
+        height: 70px;
+      }
+      .header .title {
+        margin-left: 0.8rem;
+      }
+      .header .title h1 {
+        font-size: 1.4rem;
+      }
+      .header .title p {
+        font-size: 0.75rem;
+      }
+      nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 0.8rem 0;
+      }
+      nav a {
+        width: 80%;
+        text-align: center;
+        margin: 0.2em 0;
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+      }
+      .content-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="logo7.png" alt="Geetanjali Institute Logo" />
+    <div class="title">
+      <h1>GEETANJALI INSTITUTE OF SCIENCE AND TECHNOLOGY</h1>
+      <p>3rd Mile, Bombay Highway, Gangavaram (V), Kovur (M), SPSR Nellore (Dt), Andhra Pradesh, India 524137</p>
+    </div>
+  </div>
+
+  <nav>
+    <a href="abstarct.html">Abstract</a>
+    <a href="introduction.html">Introduction</a>
+    <a href="questionrie.html">Questionnaire</a>
+    <a href="survey data.html">Survey Data</a>
+    <a href="inference.html">Inference</a>
+    <a href="graphs.html">Graph</a>
+    <a href="vlog.html">Activity Vlog</a>
+    <a href="survey photos.html">Survey Photos</a>
+    <a href="conclusion.html">Conclusion</a>
+  </nav>
+
+  <h2>IDEAS FOR SAFETY IN BANKING SECTOR</h2>
+
+  <div class="content-section">
+    <h1>NAMES OF TEAM MEMBERS</h1>                
+    <p>N.Sreeja (232U1A3372)</p>
+    <p>T.Varshitha (232U1A33C1)</p>
+    <p>P.Akshaya Krishna (242U5A3305)</p> 
+  </div>
+
+  <div class="next-button-container">
+    <a href="abstarct.html" class="next-button">Next →</a>
+  </div>
+
+</body>
+</html>
